@@ -40,7 +40,9 @@ describe(Specialty) do
       test_specialty = Specialty.new({:name => "urologist"})
       test_specialty.save()
       test_doctor = Doctor.new({:name => "Dr Bob", :specialty_id => test_specialty.id()})
+      test_doctor.save()
       test_doctor1 = Doctor.new({:name => "Dr Jesus", :specialty_id => test_specialty.id()})
+      test_doctor1.save()
       expect(test_specialty.doctors()).to eq([test_doctor, test_doctor1])
     end
   end

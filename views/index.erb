@@ -1,0 +1,102 @@
+<div class="jumbotron">
+  <% if @specialties != nil %>
+    <h2>Available specilties:</h2>
+    <ul>
+      <% @specialties.each() do |specialty| %>
+        <p>
+          <li><a href="/specialty/<%= specialty.id() %> "><%= specialty.name() %>, <%= specialty.doctors().length() %> doctors </a></li>
+        </p>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <h2>Add a specialty:</h2>
+
+  <form action="/specialty" method="post">
+    <div class="form-group">
+      <label for="name">Enter Specialty</label>
+      <input class="form-control" type="text" name="name" placeholder="eg: urology" required>
+    </div>
+    <button class="btn btn-success" type="submit">Add the specialty</button>
+  </form>
+</div>
+
+<div class="jumbotron">
+  <% if not @doctors.nil? %>
+    <h2>Available doctors:</h2>
+    <ul>
+      <% @doctors.each() do |doctor| %>
+        <p>
+          <li><a href="/doctor/<%= doctor.id() %> "><%= doctor.name() %>, <%= doctor.patients().length() %> patients </a></li>
+        </p>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <h2>Add a doctor:</h2>
+
+  <form action="/doctor" method="post">
+    <div class="form-group">
+      <label for="name">Enter Doctor's name</label>
+      <input class="form-control" type="text" name="name" placeholder="eg: Death" required>
+    </div>
+    <div class="form-group">
+      <select name="specialty">
+        <% if @specialties != nil %>
+          <% @specialties.each() do |specialty| %>
+            <option value="<%= specialty.id %>"><%= specialty.name %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </div>
+    <button class="btn btn-success" type="submit">Add the doctor</button>
+  </form>
+</div>
+
+<div class="jumbotron">
+  <% if @patients.length > 0 %>
+    <h2>Available patients:</h2>
+    <ul>
+      <% @patients.each() do |patient| %>
+        <p>
+          <li><%= patient.name() %></li>
+        </p>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <h2>Add a patient:</h2>
+
+  <form action="/patient" method="post">
+    <div class="form-group">
+      <label for="name">Enter a name</label>
+      <input class="form-control" type="text" name="name" placeholder="eg: Jane Doe" required>
+    </div>
+    <div class="form-group">
+      <select name="doctor">
+        <% if @doctors != nil %>
+          <% @doctors.each() do |doctor| %>
+            <option value="<%= doctor.id %>"><%= doctor.name %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </div>
+    <button class="btn btn-success" type="submit">Add the patient</button>
+  </form>
+</div>
+
+<form  action="/clear" method="post">
+  <button class="btn btn-warning" type="submit">Clear database</button>
+</form>
+
+<!-- Contact GitHub API Training Shop Blog About
+
+
+specialties with number of doctors- if you click on a link you get doctors of that specialty
+form to add specialties, takes you back to index
+
+doctors with number of patients- if you click on a link you get list of patients with number of patients.
+form to add doctors with specialty takes you back to index
+
+patients - if you click you can see their doctor or a list of doctors to assign them to one
+form to add patients with doctor -->

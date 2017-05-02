@@ -9,14 +9,13 @@ class Doctor
   end
 
   def self.all
-    all_doctors = DB.exec('SELECT * FROM doctors;')
+    all_doctors = DB.exec('SELECT * FROM doctors ORDER BY name;')
     saved_doctors = []
     all_doctors.each() do |doctor|
-      binding.pry
       name = doctor['name']
       specialty_id = doctor['specialty_id']
       id = doctor['id'].to_i()
-      each_doctor = Doctor.new({:name => name, :specialty_id => specialty_id})
+      each_doctor = Doctor.new({:name => name, :specialty_id => specialty_id, :id => id})
       saved_doctors.push(each_doctor)
     end
     return saved_doctors
@@ -43,11 +42,12 @@ class Doctor
 
   def patients
     list_patients = []
-    patients = DB.exec('SELECT * FROM patients WHERE doctor_id = #{self.id};')
+    patients = DB.exec("SELECT * FROM patients WHERE doctor_id = #{self.id};")
     patients.each() do |patient|
       name = patient['name']
       doctor_id = patient['doctor_id'].to_i()
-      list_patients.push(Doctor.new({:name => name, :doctor_id => doctor_id}))
+      id = patient['id'].to_i()
+      list_patients.push(Patient.new({:name => name, :doctor_id => doctor_id, :id => id}))
     end
     return list_patients
   end

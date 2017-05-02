@@ -13,7 +13,7 @@ class Specialty
   end
 
   def self.all
-    all_specialties = DB.exec('SELECT * FROM specialties;')
+    all_specialties = DB.exec('SELECT * FROM specialties ORDER BY name;')
     saved_specialties = []
     all_specialties.each() do |specialty|
       name = specialty['name']
@@ -45,11 +45,12 @@ class Specialty
 
   def doctors
     list_doctors = []
-    doctors = DB.exec('SELECT * FROM doctors WHERE specialty_id = #{self.id};')
+    doctors = DB.exec("SELECT * FROM doctors WHERE specialty_id = #{self.id()};")
     doctors.each() do |doctor|
       name = doctor['name']
       specialty_id = doctor['specialty_id'].to_i()
-      list_doctors.push(Doctor.new({:name => name, :specialty_id => specialty_id}))
+      id = doctor['id'].to_i()
+      list_doctors.push(Doctor.new({:name => name, :specialty_id => specialty_id, :id => id}))
     end
     return list_doctors
   end

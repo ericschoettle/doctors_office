@@ -1,0 +1,6 @@
+<h2><%= @doctor.name() %> patients</h2>
+<ul>
+  <% @doctor.patients().each() do |patient| %>
+    <li><%= patient.name() %></li>
+  <% end %>
+</ul>
