@@ -29,7 +29,7 @@ end
 
 post('/doctor') do
   name = params[:name]
-  specialty_id = params[:specialty].to_i()
+  specialty_id = params[:specialtySelect].to_i()
   new_doctor = Doctor.new({:name => name, :specialty_id => specialty_id})
   new_doctor.save()
   @specialties = Specialty.all()
